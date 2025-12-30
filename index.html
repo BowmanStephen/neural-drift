@@ -242,6 +242,121 @@
             flex: 1;
         }
 
+        /* Color Presets Grid */
+        .color-presets {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .preset-button {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preset-button:hover {
+            transform: scale(1.05);
+            border-color: var(--anthropic-dark);
+        }
+
+        .preset-button.active {
+            border-color: var(--anthropic-orange);
+            box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.2);
+        }
+
+        .preset-button .preset-gradient {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preset-button .preset-color {
+            flex: 1;
+        }
+
+        .preset-button .preset-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 9px;
+            padding: 2px 4px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .preset-button:hover .preset-name {
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 40vh;
+                order: 2;
+            }
+
+            .canvas-area {
+                order: 1;
+                min-height: 50vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .sidebar {
+                padding: 16px;
+                max-height: 50vh;
+            }
+
+            .sidebar h1 {
+                font-size: 20px;
+            }
+
+            .sidebar .subtitle {
+                font-size: 12px;
+                margin-bottom: 20px;
+            }
+
+            .control-section {
+                margin-bottom: 24px;
+            }
+
+            .color-presets {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .seed-controls {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .button-row {
+                flex-direction: column;
+            }
+        }
+
         .canvas-area {
             flex: 1;
             display: flex;
@@ -342,8 +457,11 @@
 
             <!-- Colors Section -->
             <div class="control-section">
-                <h3>Colors</h3>
-                
+                <h3>Color Presets</h3>
+                <div class="color-presets" id="color-presets"></div>
+
+                <h3>Custom Colors</h3>
+
                 <div class="color-group">
                     <label>Slow (Warm Thought)</label>
                     <div class="color-picker-container">
@@ -405,6 +523,58 @@
         };
 
         let defaultParams = {...params};
+
+        // Color Presets - curated combinations that work well together
+        const colorPresets = [
+            {
+                name: 'Sunset',
+                colorSlow: '#ff6b6b',
+                colorFast: '#ffd93d',
+                colorBg: '#1a1a2e'
+            },
+            {
+                name: 'Ocean',
+                colorSlow: '#0077b6',
+                colorFast: '#00b4d8',
+                colorBg: '#0d1117'
+            },
+            {
+                name: 'Forest',
+                colorSlow: '#2d6a4f',
+                colorFast: '#95d5b2',
+                colorBg: '#1b4332'
+            },
+            {
+                name: 'Anthropic',
+                colorSlow: '#d97757',
+                colorFast: '#6a9bcc',
+                colorBg: '#0d1117'
+            },
+            {
+                name: 'Neon',
+                colorSlow: '#ff00ff',
+                colorFast: '#00ffff',
+                colorBg: '#0a0a0a'
+            },
+            {
+                name: 'Fire',
+                colorSlow: '#ff4500',
+                colorFast: '#ffd700',
+                colorBg: '#1a0a00'
+            },
+            {
+                name: 'Aurora',
+                colorSlow: '#00ff87',
+                colorFast: '#60efff',
+                colorBg: '#0d0d1a'
+            },
+            {
+                name: 'Magma',
+                colorSlow: '#ff0000',
+                colorFast: '#ff8c00',
+                colorBg: '#1a0505'
+            }
+        ];
 
         // ═══════════════════════════════════════════════════════════════════════
         // NEURAL DRIFT ALGORITHM
@@ -620,7 +790,7 @@
         function updateParam(paramName, value) {
             params[paramName] = parseFloat(value);
             document.getElementById(paramName + '-value').textContent = value;
-            
+
             // Reinitialize for particle count changes
             if (paramName === 'particleCount') {
                 initializeSystem();
@@ -630,11 +800,89 @@
         function updateColor(colorId, value) {
             params[colorId] = value;
             document.getElementById(colorId + '-value').textContent = value;
-            
+            clearPresetSelection();
+
             // Reinitialize for background color changes
             if (colorId === 'colorBg') {
                 initializeSystem();
             }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // COLOR PRESETS SYSTEM
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function initializeColorPresets() {
+            const presetsContainer = document.getElementById('color-presets');
+            presetsContainer.innerHTML = '';
+
+            colorPresets.forEach((preset, index) => {
+                const button = document.createElement('div');
+                button.className = 'preset-button';
+                button.onclick = () => applyPreset(index);
+
+                const gradient = document.createElement('div');
+                gradient.className = 'preset-gradient';
+
+                const slowColor = document.createElement('div');
+                slowColor.className = 'preset-color';
+                slowColor.style.backgroundColor = preset.colorSlow;
+
+                const fastColor = document.createElement('div');
+                fastColor.className = 'preset-color';
+                fastColor.style.backgroundColor = preset.colorFast;
+
+                const bgColor = document.createElement('div');
+                bgColor.className = 'preset-color';
+                bgColor.style.backgroundColor = preset.colorBg;
+
+                const name = document.createElement('div');
+                name.className = 'preset-name';
+                name.textContent = preset.name;
+
+                gradient.appendChild(slowColor);
+                gradient.appendChild(fastColor);
+                gradient.appendChild(bgColor);
+                button.appendChild(gradient);
+                button.appendChild(name);
+
+                presetsContainer.appendChild(button);
+            });
+        }
+
+        function applyPreset(index) {
+            const preset = colorPresets[index];
+
+            // Update params
+            params.colorSlow = preset.colorSlow;
+            params.colorFast = preset.colorFast;
+            params.colorBg = preset.colorBg;
+
+            // Update UI elements
+            document.getElementById('colorSlow').value = preset.colorSlow;
+            document.getElementById('colorSlow-value').textContent = preset.colorSlow;
+            document.getElementById('colorFast').value = preset.colorFast;
+            document.getElementById('colorFast-value').textContent = preset.colorFast;
+            document.getElementById('colorBg').value = preset.colorBg;
+            document.getElementById('colorBg-value').textContent = preset.colorBg;
+
+            // Update active state
+            const buttons = document.querySelectorAll('.preset-button');
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Reinitialize with new colors
+            initializeSystem();
+        }
+
+        function clearPresetSelection() {
+            const buttons = document.querySelectorAll('.preset-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
         }
 
         // ═══════════════════════════════════════════════════════════════════════
@@ -708,6 +956,7 @@
 
         window.addEventListener('load', function() {
             updateSeedDisplay();
+            initializeColorPresets();
         });
     </script>
 </body>
