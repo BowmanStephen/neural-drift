@@ -7,6 +7,10 @@ node_modules/
 dist/
 build/
 .vercel
+.next/
+
+# Next.js (not used, but just in case)
+.next/
 
 # OS files
 .DS_Store

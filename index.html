@@ -348,12 +348,44 @@
         }
 
         @media (max-width: 480px) {
-            .seed-controls {
-                grid-template-columns: 1fr 1fr;
-            }
-
+            /* Stack action buttons with better sizing */
             .button-row {
                 flex-direction: column;
+                gap: 12px;
+            }
+
+            .button-row .button {
+                width: 100%;
+                min-height: 44px;
+            }
+
+            /* Reduce color presets to 3 columns for better touch targets */
+            .color-presets {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            /* Smaller headings */
+            .sidebar h1 {
+                font-size: 18px;
+            }
+
+            .sidebar .subtitle {
+                font-size: 11px;
+            }
+
+            .control-section h3 {
+                font-size: 14px;
+            }
+
+            /* More compact spacing */
+            .control-section {
+                margin-bottom: 16px;
+            }
+
+            /* Full-width seed input */
+            .seed-input {
+                width: 100%;
             }
         }
 
