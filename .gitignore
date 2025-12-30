@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+.env
+.env.local
+
+# Build outputs
+dist/
+build/
+.vercel
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archive files (optional - uncomment if you want to ignore)
+# *.zip
+
