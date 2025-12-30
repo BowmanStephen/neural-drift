@@ -424,17 +424,13 @@
         }
 
         function initializeSystem() {
-            // Only initialize if canvas exists
+            // Only initialize if canvas exists (check for UI handler calls, not setup)
             if (typeof width === 'undefined' || typeof height === 'undefined') {
                 return;
             }
             
-            if (typeof randomSeed === 'function') {
-                randomSeed(params.seed);
-            }
-            if (typeof noiseSeed === 'function') {
-                noiseSeed(params.seed);
-            }
+            randomSeed(params.seed);
+            noiseSeed(params.seed);
             zOffset = 0;
             
             particles = [];
