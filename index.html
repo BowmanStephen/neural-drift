@@ -42,25 +42,27 @@
         .sidebar {
             width: 320px;
             flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(20, 20, 19, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 24px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(20, 20, 19, 0.1);
+            box-shadow: 0 10px 30px rgba(20, 20, 19, 0.2);
             overflow-y: auto;
             overflow-x: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .sidebar h1 {
             font-family: 'Lora', serif;
             font-size: 24px;
             font-weight: 500;
-            color: var(--anthropic-dark);
+            color: var(--anthropic-light);
             margin-bottom: 8px;
         }
 
         .sidebar .subtitle {
-            color: var(--anthropic-mid-gray);
+            color: var(--anthropic-light-gray);
             font-size: 14px;
             margin-bottom: 32px;
             line-height: 1.4;
@@ -73,7 +75,7 @@
         .control-section h3 {
             font-size: 16px;
             font-weight: 600;
-            color: var(--anthropic-dark);
+            color: var(--anthropic-light);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
@@ -120,7 +122,7 @@
             display: block;
             font-size: 14px;
             font-weight: 500;
-            color: var(--anthropic-dark);
+            color: var(--anthropic-light);
             margin-bottom: 8px;
         }
 
@@ -166,7 +168,7 @@
         .value-display {
             font-family: 'Courier New', monospace;
             font-size: 12px;
-            color: var(--anthropic-mid-gray);
+            color: var(--anthropic-light-gray);
             min-width: 60px;
             text-align: right;
         }
@@ -178,7 +180,7 @@
         .color-group label {
             display: block;
             font-size: 12px;
-            color: var(--anthropic-mid-gray);
+            color: var(--anthropic-light-gray);
             margin-bottom: 4px;
         }
 
@@ -201,7 +203,7 @@
         .color-value {
             font-family: 'Courier New', monospace;
             font-size: 12px;
-            color: var(--anthropic-mid-gray);
+            color: var(--anthropic-light-gray);
         }
 
         .button {
@@ -214,13 +216,13 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
-            background: var(--anthropic-light);
-            color: var(--anthropic-dark);
-            border: 1px solid var(--anthropic-light-gray);
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--anthropic-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .button:hover {
-            background: var(--anthropic-light-gray);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .button.primary {
@@ -242,159 +244,12 @@
             flex: 1;
         }
 
-        /* Color Presets Grid */
-        .color-presets {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .preset-button {
-            aspect-ratio: 1;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .preset-button:hover {
-            transform: scale(1.05);
-            border-color: var(--anthropic-dark);
-        }
-
-        .preset-button.active {
-            border-color: var(--anthropic-orange);
-            box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.2);
-        }
-
-        .preset-button .preset-gradient {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .preset-button .preset-color {
-            flex: 1;
-        }
-
-        .preset-button .preset-name {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            font-size: 9px;
-            padding: 2px 4px;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .preset-button:hover .preset-name {
-            opacity: 1;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                max-height: 40vh;
-                order: 2;
-            }
-
-            .canvas-area {
-                order: 1;
-                min-height: 50vh;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-                gap: 10px;
-            }
-
-            .sidebar {
-                padding: 16px;
-                max-height: 50vh;
-            }
-
-            .sidebar h1 {
-                font-size: 20px;
-            }
-
-            .sidebar .subtitle {
-                font-size: 12px;
-                margin-bottom: 20px;
-            }
-
-            .control-section {
-                margin-bottom: 24px;
-            }
-
-            .color-presets {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 6px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            /* Stack action buttons with better sizing */
-            .button-row {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .button-row .button {
-                width: 100%;
-                min-height: 44px;
-            }
-
-            /* Reduce color presets to 3 columns for better touch targets */
-            .color-presets {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-
-            /* Smaller headings */
-            .sidebar h1 {
-                font-size: 18px;
-            }
-
-            .sidebar .subtitle {
-                font-size: 11px;
-            }
-
-            .control-section h3 {
-                font-size: 14px;
-            }
-
-            /* More compact spacing */
-            .control-section {
-                margin-bottom: 16px;
-            }
-
-            /* Full-width seed input */
-            .seed-input {
-                width: 100%;
-            }
-        }
-
         .canvas-area {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(20, 20, 19, 0.3);
             border-radius: 12px;
             overflow: hidden;
         }
@@ -437,12 +292,12 @@
             <!-- Parameters Section -->
             <div class="control-section">
                 <h3>Parameters</h3>
-                
+
                 <div class="control-group">
                     <label>Particle Count</label>
                     <div class="slider-container">
-                        <input type="range" id="particleCount" min="500" max="8000" step="100" value="3000" oninput="updateParam('particleCount', this.value)">
-                        <span class="value-display" id="particleCount-value">3000</span>
+                        <input type="range" id="particleCount" min="500" max="3000" step="100" value="1200" oninput="updateParam('particleCount', this.value)">
+                        <span class="value-display" id="particleCount-value">1200</span>
                     </div>
                 </div>
 
@@ -489,10 +344,7 @@
 
             <!-- Colors Section -->
             <div class="control-section">
-                <h3>Color Presets</h3>
-                <div class="color-presets" id="color-presets"></div>
-
-                <h3>Custom Colors</h3>
+                <h3>Colors</h3>
 
                 <div class="color-group">
                     <label>Slow (Warm Thought)</label>
@@ -543,7 +395,7 @@
 
         let params = {
             seed: 12345,
-            particleCount: 3000,
+            particleCount: 1200,
             flowIntensity: 1.5,
             noiseScale: 0.006,
             trailPersistence: 12,
@@ -556,58 +408,6 @@
 
         let defaultParams = {...params};
 
-        // Color Presets - curated combinations that work well together
-        const colorPresets = [
-            {
-                name: 'Sunset',
-                colorSlow: '#ff6b6b',
-                colorFast: '#ffd93d',
-                colorBg: '#1a1a2e'
-            },
-            {
-                name: 'Ocean',
-                colorSlow: '#0077b6',
-                colorFast: '#00b4d8',
-                colorBg: '#0d1117'
-            },
-            {
-                name: 'Forest',
-                colorSlow: '#2d6a4f',
-                colorFast: '#95d5b2',
-                colorBg: '#1b4332'
-            },
-            {
-                name: 'Anthropic',
-                colorSlow: '#d97757',
-                colorFast: '#6a9bcc',
-                colorBg: '#0d1117'
-            },
-            {
-                name: 'Neon',
-                colorSlow: '#ff00ff',
-                colorFast: '#00ffff',
-                colorBg: '#0a0a0a'
-            },
-            {
-                name: 'Fire',
-                colorSlow: '#ff4500',
-                colorFast: '#ffd700',
-                colorBg: '#1a0a00'
-            },
-            {
-                name: 'Aurora',
-                colorSlow: '#00ff87',
-                colorFast: '#60efff',
-                colorBg: '#0d0d1a'
-            },
-            {
-                name: 'Magma',
-                colorSlow: '#ff0000',
-                colorFast: '#ff8c00',
-                colorBg: '#1a0505'
-            }
-        ];
-
         // ═══════════════════════════════════════════════════════════════════════
         // NEURAL DRIFT ALGORITHM
         // ═══════════════════════════════════════════════════════════════════════
@@ -615,7 +415,7 @@
         let particles = [];
         let zOffset = 0;
         let spatialHash = {};
-        let cellSize = 30;
+        let cellSize = 50;
 
         function setup() {
             let canvas = createCanvas(900, 900);
@@ -626,15 +426,19 @@
         }
 
         function initializeSystem() {
-            // Only initialize if canvas exists (check for UI handler calls, not setup)
+            // Only initialize if canvas exists
             if (typeof width === 'undefined' || typeof height === 'undefined') {
                 return;
             }
-            
-            randomSeed(params.seed);
-            noiseSeed(params.seed);
+
+            if (typeof randomSeed === 'function') {
+                randomSeed(params.seed);
+            }
+            if (typeof noiseSeed === 'function') {
+                noiseSeed(params.seed);
+            }
             zOffset = 0;
-            
+
             particles = [];
             for (let i = 0; i < params.particleCount; i++) {
                 particles.push(new NeuralParticle());
@@ -695,26 +499,26 @@
                     this.pos.y * params.noiseScale,
                     zOffset
                 ) * TWO_PI * 4;
-                
+
                 // Secondary turbulence layer
                 let angle2 = noise(
                     this.pos.x * params.noiseScale * 2.5 + 1000,
                     this.pos.y * params.noiseScale * 2.5 + 1000,
                     zOffset * 1.5
                 ) * TWO_PI * 2;
-                
+
                 // Combine layers with weighted influence
                 let angle = angle1 * 0.7 + angle2 * 0.3;
-                
+
                 let force = p5.Vector.fromAngle(angle);
                 force.setMag(params.flowIntensity * 0.1);
-                
+
                 // Apply neighbor influence (subtle flocking behavior)
                 if (params.neighborInfluence > 0) {
                     let neighborForce = this.getNeighborInfluence();
                     force.add(neighborForce);
                 }
-                
+
                 this.acc.add(force);
             }
 
@@ -723,7 +527,7 @@
                 let cellY = floor(this.pos.y / cellSize);
                 let alignment = createVector(0, 0);
                 let count = 0;
-                
+
                 // Check neighboring cells
                 for (let dx = -1; dx <= 1; dx++) {
                     for (let dy = -1; dy <= 1; dy++) {
@@ -742,12 +546,12 @@
                         }
                     }
                 }
-                
+
                 if (count > 0) {
                     alignment.div(count);
                     alignment.setMag(params.neighborInfluence * 0.05);
                 }
-                
+
                 return alignment;
             }
 
@@ -783,20 +587,20 @@
                 let speed = this.vel.mag();
                 let t = map(speed, 0, this.maxSpeed, 0, 1);
                 t = constrain(t, 0, 1);
-                
+
                 let slowColor = hexToRgb(params.colorSlow);
                 let fastColor = hexToRgb(params.colorFast);
-                
+
                 let r = lerp(slowColor.r, fastColor.r, t);
                 let g = lerp(slowColor.g, fastColor.g, t);
                 let b = lerp(slowColor.b, fastColor.b, t);
-                
+
                 // Alpha based on speed for ethereal effect
                 let alpha = map(speed, 0, this.maxSpeed, 30, 120);
-                
+
                 stroke(r, g, b, alpha);
                 strokeWeight(map(speed, 0, this.maxSpeed, 1.5, 0.5));
-                
+
                 // Draw trail as line from previous to current position
                 line(this.prevPos.x, this.prevPos.y, this.pos.x, this.pos.y);
             }
@@ -832,89 +636,11 @@
         function updateColor(colorId, value) {
             params[colorId] = value;
             document.getElementById(colorId + '-value').textContent = value;
-            clearPresetSelection();
 
             // Reinitialize for background color changes
             if (colorId === 'colorBg') {
                 initializeSystem();
             }
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════
-        // COLOR PRESETS SYSTEM
-        // ═══════════════════════════════════════════════════════════════════════
-
-        function initializeColorPresets() {
-            const presetsContainer = document.getElementById('color-presets');
-            presetsContainer.innerHTML = '';
-
-            colorPresets.forEach((preset, index) => {
-                const button = document.createElement('div');
-                button.className = 'preset-button';
-                button.onclick = () => applyPreset(index);
-
-                const gradient = document.createElement('div');
-                gradient.className = 'preset-gradient';
-
-                const slowColor = document.createElement('div');
-                slowColor.className = 'preset-color';
-                slowColor.style.backgroundColor = preset.colorSlow;
-
-                const fastColor = document.createElement('div');
-                fastColor.className = 'preset-color';
-                fastColor.style.backgroundColor = preset.colorFast;
-
-                const bgColor = document.createElement('div');
-                bgColor.className = 'preset-color';
-                bgColor.style.backgroundColor = preset.colorBg;
-
-                const name = document.createElement('div');
-                name.className = 'preset-name';
-                name.textContent = preset.name;
-
-                gradient.appendChild(slowColor);
-                gradient.appendChild(fastColor);
-                gradient.appendChild(bgColor);
-                button.appendChild(gradient);
-                button.appendChild(name);
-
-                presetsContainer.appendChild(button);
-            });
-        }
-
-        function applyPreset(index) {
-            const preset = colorPresets[index];
-
-            // Update params
-            params.colorSlow = preset.colorSlow;
-            params.colorFast = preset.colorFast;
-            params.colorBg = preset.colorBg;
-
-            // Update UI elements
-            document.getElementById('colorSlow').value = preset.colorSlow;
-            document.getElementById('colorSlow-value').textContent = preset.colorSlow;
-            document.getElementById('colorFast').value = preset.colorFast;
-            document.getElementById('colorFast-value').textContent = preset.colorFast;
-            document.getElementById('colorBg').value = preset.colorBg;
-            document.getElementById('colorBg-value').textContent = preset.colorBg;
-
-            // Update active state
-            const buttons = document.querySelectorAll('.preset-button');
-            buttons.forEach((btn, i) => {
-                if (i === index) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-
-            // Reinitialize with new colors
-            initializeSystem();
-        }
-
-        function clearPresetSelection() {
-            const buttons = document.querySelectorAll('.preset-button');
-            buttons.forEach(btn => btn.classList.remove('active'));
         }
 
         // ═══════════════════════════════════════════════════════════════════════
@@ -956,7 +682,7 @@
 
         function resetParameters() {
             params = {...defaultParams};
-            
+
             // Update all UI elements
             document.getElementById('particleCount').value = params.particleCount;
             document.getElementById('particleCount-value').textContent = params.particleCount;
@@ -970,14 +696,14 @@
             document.getElementById('neighborInfluence-value').textContent = params.neighborInfluence;
             document.getElementById('timeEvolution').value = params.timeEvolution;
             document.getElementById('timeEvolution-value').textContent = params.timeEvolution;
-            
+
             document.getElementById('colorSlow').value = params.colorSlow;
             document.getElementById('colorSlow-value').textContent = params.colorSlow;
             document.getElementById('colorFast').value = params.colorFast;
             document.getElementById('colorFast-value').textContent = params.colorFast;
             document.getElementById('colorBg').value = params.colorBg;
             document.getElementById('colorBg-value').textContent = params.colorBg;
-            
+
             updateSeedDisplay();
             initializeSystem();
         }
@@ -988,7 +714,6 @@
 
         window.addEventListener('load', function() {
             updateSeedDisplay();
-            initializeColorPresets();
         });
     </script>
 </body>
