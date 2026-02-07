@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open:*)",
+      "Bash(PORT=3001 pnpm dev:*)",
+      "Bash(pkill:*)",
+      "Bash(printf:*)",
+      "Bash(lsof:*)",
+      "Skill(document-skills:frontend-design)",
+      "Bash(PORT=3001 npm run dev:*)"
+    ]
+  }
+}
